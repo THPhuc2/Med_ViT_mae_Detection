@@ -121,7 +121,7 @@ def main():
             "train_loss": avg_train_loss
         })
 
-        model.eval()
+        model.train()
         total_val_loss = 0.0
         with torch.no_grad():
             for images, targets in val_loader:
