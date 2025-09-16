@@ -29,14 +29,18 @@ import logging
 from model_ptln import LitMAE
 from lightning.pytorch.loggers import WandbLogger
 
+import torch
+# torch.cuda.set_per_process_memory_fraction(0.95, device=0)  # 95% VRAM
+# for i in range(torch.cuda.device_count()):
+#     torch.cuda.set_per_process_memory_fraction(0.95, device=i)
 
 logger = logging.getLogger(__name__)
-os.system("wandb login --relogin 138c38699b36fb0223ca0f94cde30c6d531895ca")    # của Phúc d8dbd91c9717ac3a104742d8f247ae4012526297
+os.system("wandb login --relogin d8dbd91c9717ac3a104742d8f247ae4012526297")    # của Phúc d8dbd91c9717ac3a104742d8f247ae4012526297  138c38699b36fb0223ca0f94cde30c6d531895ca
 # wandb.init(project="mae_training", sync_tensorboard=True)
 # wandb.init(project="mae_training")
 wandb_logger = WandbLogger(
     project="mae_training",
-    log_model="all",
+    log_model=False,  # set to True if you want to log the model
 )
 
 
@@ -250,7 +254,7 @@ def main(args):
     val_dataset = torch.utils.data.DataLoader(dataset['validation'], batch_size=args.batch_size, shuffle=False)
 
     model_checkpoint = ModelCheckpoint(
-        save_top_k=5,
+        save_top_k=3,
         monitor="valid/loss",
         mode="min", dirpath=f"{args.output_dir}/output_ptln",
         filename="sample-{epoch:03d}-{valid/loss:.2f}",

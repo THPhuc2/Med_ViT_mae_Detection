@@ -60,7 +60,8 @@ def build_mae_backbone(ckpt_path):
     # Bọc encoder lại thành backbone dùng cho detection
     backbone = MAEBackbone(mae_encoder)
     return backbone
-backbone = build_mae_backbone("/home/tiennv/phucth/medical/mae/outputs_rand_4_bitwise_3_semi_objmask_150_huge/files/output_ptln/sample-epoch=002-valid/loss=0.04.ckpt")
+# backbone = build_mae_backbone("/home/datnvt/project/mae/outputs_rand_4_bitwise_3_semi_objmask_150_huge/files/output_ptln/sample-epoch=033-valid/loss=0.02.ckpt")
+backbone = build_mae_backbone("/home/datnvt/project/mae/outputs_rand_4_bitwise_3_semi_objmask_150_huge_2/files/output_ptln/sample-epoch=060-valid/loss=0.02.ckpt")
 x = torch.randn(2, 3, 224, 224)
 out = backbone(x)
 print(out.shape)  # Expect: (2, 1280, 14, 14) nếu patch_size=16
